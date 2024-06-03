@@ -1,0 +1,24 @@
+# client.toml
+[client]
+remote_addr = "<server-ip>:<server-public-port>" # The address of the server. The port must be the same with the port in `server.bind_addr`
+retry_interval = 1
+
+[client.transport] # The whole block is optional. Specify which transport to use
+type = "tcp" # Optional. Possible values: ["tcp", "tls", "noise"]. Default: "tcp"
+
+[client.transport.tcp] # Optional. Also affects `noise` and `tls`
+nodelay = true # Optional. Determine whether to enable TCP_NODELAY, if applicable, to improve the latency but decrease the bandwidth. Default: true
+keepalive_secs = 20 # Optional. Specify `tcp_keepalive_time` in `tcp(7)`, if applicable. Default: 20 seconds
+keepalive_interval = 8 # Optional. Specify `tcp_keepalive_intvl` in `tcp(7)`, if applicable. Default: 8 seconds
+
+[client.services.my_ssh]
+token = "<ADD_PASSWORD_HERE>" # Must be the same with the server to pass the validation
+local_addr = "host.docker.internal:22" # The address of the service that needs to be forwarded
+
+[server.services.jupyter_notebook] # The service name must be identical to the client side
+token = "<ADD_PASSWORD_HERE>" # Necessary if `server.default_token` not set
+local_addr = "host.docker.internal:1234" # The address of the service that needs to be forwarded
+
+[server.services.web_service] # The service name must be identical to the client side
+token = "<ADD_PASSWORD_HERE>" # Necessary if `server.default_token` not set
+local_addr = "host.docker.internal:8888" # The address of the service that needs to be forwarded

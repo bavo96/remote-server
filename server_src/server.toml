@@ -1,0 +1,27 @@
+# server.toml
+[server]
+bind_addr = "0.0.0.0:<server-public-port>" # Necessary. The address that the server listens for clients. Generally only the port needs to be change.
+heartbeat_interval = 30 # Optional. The interval between two application-layer heartbeat. Set to 0 to disable sending heartbeat. Default: 30 seconds
+
+[server.transport] # Same as `[client.transport]`
+type = "tcp"
+
+[server.transport.tcp] # Same as the client
+nodelay = true
+keepalive_secs = 20
+keepalive_interval = 8
+
+[server.services.my_ssh] # The service name must be identical to the client side
+token = "<ADD_PASSWORD_HERE>" # Necessary if `server.default_token` not set
+bind_addr = "0.0.0.0:20752" # Necessary. The address of the service is exposed at. Generally only the port needs to be change.
+nodelay = true # Optional. Same as the client
+
+[server.services.jupyter_notebook] # The service name must be identical to the client side
+token = "<ADD_PASSWORD_HERE>" # Necessary if `server.default_token` not set
+bind_addr = "0.0.0.0:20780" # Necessary. The address of the service is exposed at. Generally only the port needs to be change.
+nodelay = true # Optional. Same as the client
+
+[server.services.web_service] # The service name must be identical to the client side
+token = "<ADD_PASSWORD_HERE>" # Necessary if `server.default_token` not set
+bind_addr = "0.0.0.0:20790" # Necessary. The address of the service is exposed at. Generally only the port needs to be change.
+nodelay = true # Optional. Same as the client
